@@ -1,0 +1,88 @@
+<h1 class="mt-4">{{title}}</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active"></li>
+</ol>
+<div class="divrow">
+    <button type="button" routerLink="/clientes-forms" 
+    class="btn btn-outline-success mb-2"><i class="fas fa-plus">
+    </i> Cadastrar novo</button>
+</div>
+<div class="card mb-5 container">
+    <div class="card-header"><i class="fas fa-database"></i> Clientes cadastrados</div>
+    <div class="row" >
+        <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="messagemSucesso">
+            <div>
+                 <i class="fas fa-check-circle"></i> {{ messagemSucesso }}
+            </div>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="alert alert-warning  d-flex align-items-center" role="alert" *ngIf="menssagemErro">
+            <div>
+                 <i class="fas fa-exclamation-triangle"></i> {{menssagemErro}}
+            </div>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    <div class="card-body ">
+        <div class="table-responsive container">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th class="col-sm-1">ID</th>
+                        <th class="col-sm-2">Data de cadastro</th>
+                        <th>Nome</th>
+                        <th class="col-sm-2">CPF</th>
+                        <th class="col-sm-2">Ações</th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cliente of clientes">
+                        <td>{{ cliente.id }}</td>
+                        <td>{{ cliente.dataCadastro }}</td>
+                        <td>{{ cliente.nome }}</td>
+                        <td>{{ cliente.cpf }}</td>
+                        <td>
+                            <div class="row ml-1">                                <div>
+                                    <button class="bt btn-warning"  routerLink="/clientes-forms/{{cliente.id}}"><i class="fas fa-pencil-alt"></i></button>
+                                </div>
+                                
+                                <div class="ml-1">
+                                    <button class="bt btn-danger" data-toggle="modal"  (click)="preparaDelete(cliente)" data-target="#modalDelete"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+    <div id="modalDelete" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1>Confirmação</h1>
+                </div>
+                <div class="modal-body" *ngIf="clienteSelecionado">
+                      Confimar a deleção de <strong>{{ clienteSelecionado.nome }}</strong> ?
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="btn btn-success mr-2" data-dismiss="modal" (click)="deleteCliente()">
+                            Confirmar
+                        </div>
+                        <div class="btn btn-secondary mr-2" data-dismiss="modal">
+                            Cancelar
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

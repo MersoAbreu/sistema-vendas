@@ -1,5 +1,6 @@
 package com.sistema.venda.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,10 +16,19 @@ public class ClienteService {
 	@Autowired
 	private ClienteRepository clienteRepository;
 	
+	
 	//Metodo de criação de clientes
-	public Cliente create(Cliente cliente) {
+	public Cliente create(Cliente cliente) throws Exception {
+		List<Cliente> clientes = findAll();
+		
+		if(clientes.equals(cliente.getCpf()))
+		{
+			throw new Exception("Cliente já cadastrado");
+			
+		}
 		Cliente cli = clienteRepository.save(cliente);
 		return cli;
+		
 	}
 	
 	public List<Cliente> findAll(){
